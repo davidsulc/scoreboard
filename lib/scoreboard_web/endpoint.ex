@@ -1,6 +1,8 @@
 defmodule ScoreboardWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :scoreboard
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", ScoreboardWeb.UserSocket,
     websocket: true,
     longpoll: false

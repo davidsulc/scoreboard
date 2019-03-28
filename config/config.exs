@@ -12,7 +12,10 @@ config :scoreboard, ScoreboardWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "nSdAQ1qNUbi5+5/xjG8hHQ9mv+uL4ueJjqZqg75qHB/dCpANq1AHI1O1e7skfNHQ",
   render_errors: [view: ScoreboardWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Scoreboard.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Scoreboard.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "AaA7re8EXHkdqxGY9xLfj0VyawJctBCT"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -21,6 +24,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :phoenix, template_engines: [leex: Phoenix.LiveView.Engine]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

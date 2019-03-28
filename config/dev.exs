@@ -52,7 +52,8 @@ config :scoreboard, ScoreboardWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/scoreboard_web/views/.*(ex)$},
-      ~r{lib/scoreboard_web/templates/.*(eex)$}
+      ~r{lib/scoreboard_web/templates/.*(eex)$},
+      ~r{lib/live_view_counter_web/live/.*(ex)$}
     ]
   ]
 
