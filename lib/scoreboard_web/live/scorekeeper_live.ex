@@ -8,14 +8,17 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   end
 
   def mount(_session, socket) do
-    {:ok, assign(socket, :val, 0)}
+    {:ok, score} = Scoreboard.GameState.get_score()
+    {:ok, assign(socket, :val, score)}
   end
 
   def handle_event("inc", _, socket) do
-    {:noreply, update(socket, :val, &(&1 + 1))}
+    score = Scoreboard.GameState.inc_score()
+    {:noreply, assign(socket, :val, score)}
   end
 
   def handle_event("dec", _, socket) do
-    {:noreply, update(socket, :val, &(&1 - 1))}
+    score = Scoreboard.GameState.dec_score()
+    {:noreply, assign(socket, :val, score)}
   end
 end
