@@ -1,14 +1,10 @@
 defmodule ScoreboardWeb.ScorekeeperLive do
   use Phoenix.LiveView
 
+  alias ScoreboardWeb.ScorekeeperView
+
   def render(assigns) do
-    ~L"""
-    <div>
-      <h1>The count is: <%= @val %></h1>
-      <button phx-click="dec">-</button>
-      <button phx-click="inc">+</button>
-    </div>
-    """
+    ScorekeeperView.render("index.html", assigns)
   end
 
   def mount(_session, socket) do
