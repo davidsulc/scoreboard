@@ -2,7 +2,7 @@ defmodule ScoreboardWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ScoreboardWeb.RoomChannel
+  channel "scoreboard:*", ScoreboardWeb.ScoreboardChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
