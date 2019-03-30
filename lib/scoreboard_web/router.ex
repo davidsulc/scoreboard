@@ -18,7 +18,7 @@ defmodule ScoreboardWeb.Router do
   scope "/", ScoreboardWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ScoreController, :index
     live "/scorekeeper", ScorekeeperLive
   end
 

@@ -1,4 +1,4 @@
-defmodule ScoreboardWeb.PageController do
+defmodule ScoreboardWeb.ScoreController do
   use ScoreboardWeb, :controller
 
   def index(conn, _params) do
