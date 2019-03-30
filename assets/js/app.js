@@ -21,3 +21,7 @@ let liveSocket = new LiveSocket("/live")
 liveSocket.connect()
 
 import socket from "./socket"
+
+import Scoreboard from "./scoreboard"
+
+Scoreboard.init(socket)
