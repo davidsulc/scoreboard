@@ -9,18 +9,30 @@ defmodule ScoreboardWeb.ScorekeeperLive do
 
   def mount(_session, socket) do
     {:ok, score} = Scoreboard.GameState.get_score()
-    {:ok, assign(socket, :val, score)}
+    {:ok, assign(socket, :score, score)}
   end
 
-  def handle_event("inc", _, socket) do
-    score = Scoreboard.GameState.inc_score()
+  def handle_event("inc-right", _, socket) do
+    score = Scoreboard.GameState.inc_score(:right)
     ScoreboardWeb.Endpoint.broadcast("scoreboard:lobby", "update", %{score: score})
-    {:noreply, assign(socket, :val, score)}
+    {:noreply, assign(socket, :score, score)}
   end
 
-  def handle_event("dec", _, socket) do
-    score = Scoreboard.GameState.dec_score()
+  def handle_event("dec-right", _, socket) do
+    score = Scoreboard.GameState.dec_score(:right)
     ScoreboardWeb.Endpoint.broadcast("scoreboard:lobby", "update", %{score: score})
-    {:noreply, assign(socket, :val, score)}
+    {:noreply, assign(socket, :score, score)}
+  end
+
+  def handle_event("inc-left", _, socket) do
+    score = Scoreboard.GameState.inc_score(:left)
+    ScoreboardWeb.Endpoint.broadcast("scoreboard:lobby", "update", %{score: score})
+    {:noreply, assign(socket, :score, score)}
+  end
+
+  def handle_event("dec-left", _, socket) do
+    score = Scoreboard.GameState.dec_score(:left)
+    ScoreboardWeb.Endpoint.broadcast("scoreboard:lobby", "update", %{score: score})
+    {:noreply, assign(socket, :score, score)}
   end
 end

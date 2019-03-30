@@ -5,7 +5,7 @@ defmodule ScoreboardWeb.PageController do
     {:ok, score} = Scoreboard.GameState.get_score()
 
     conn
-    |> assign(:score, score)
+    |> assign(:score, "#{score.left} - #{score.right}")
     |> render("index.html")
   end
 end

@@ -1,5 +1,12 @@
-<div>
-  <h1>The count is: <%= @val %></h1>
-  <button phx-click="dec">-</button>
-  <button phx-click="inc">+</button>
-</div>
+<section class="row">
+  <article class="column">
+    <h1>The count is: <%= @score.left %></h1>
+    <button phx-click="dec-left">-</button>
+    <button phx-click="inc-left">+</button>
+  </article>
+  <article class="column">
+    <h1>The count is: <%= @score.right %></h1>
+    <button phx-click="dec-right">-</button>
+    <button phx-click="inc-right">+</button>
+  </article>
+</section>
