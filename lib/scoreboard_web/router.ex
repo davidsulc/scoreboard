@@ -18,7 +18,7 @@ defmodule ScoreboardWeb.Router do
   scope "/", ScoreboardWeb do
     pipe_through :browser
 
-    live("/", ScorekeeperLive)
+    live("/scorekeeper", ScorekeeperLive)
   end
 
   # Other scopes may use custom stacks.
