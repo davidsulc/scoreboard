@@ -2,11 +2,13 @@ defmodule ScoreboardWeb.ScoreController do
   use ScoreboardWeb, :controller
 
   def index(conn, _params) do
-    {:ok, score} = Scoreboard.GameState.get_score()
+    {:ok, state} = Scoreboard.GameState.state()
 
     conn
     |> put_layout("scoreboard.html")
-    |> assign(:score, "#{score.left} - #{score.right}")
+    |> assign(:state, state)
+    |> assign(:left_team, :team_a)
+    |> assign(:right_team, :team_b)
     |> render("index.html")
   end
 end
