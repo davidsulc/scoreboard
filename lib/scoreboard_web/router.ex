@@ -8,7 +8,7 @@ defmodule ScoreboardWeb.Router do
     plug Phoenix.LiveView.Flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_layout, {ScoreboardWeb.LayoutView, :app}
+    # plug :put_layout, {ScoreboardWeb.LayoutView, :app}
   end
 
   pipeline :api do
@@ -19,6 +19,7 @@ defmodule ScoreboardWeb.Router do
     pipe_through :browser
 
     get "/", ScoreController, :index
+    live "/score", ScoreLive
     live "/scorekeeper", ScorekeeperLive
   end
 
