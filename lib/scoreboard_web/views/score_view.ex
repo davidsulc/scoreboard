@@ -22,7 +22,7 @@ defmodule ScoreboardWeb.ScoreView do
     Enum.map(sets, fn set ->
       case set do
         {left, right} when left > right -> {set_to_string(set), ""}
-        {left, right} -> {"", set_to_string(set)}
+        set -> {"", set_to_string(set)}
       end
     end)
   end
@@ -41,7 +41,7 @@ defmodule ScoreboardWeb.ScoreView do
     Enum.reduce(sets, {0, 0}, fn set, {acc_a, acc_b} ->
       case set do
         {a, b} when a > b -> {acc_a + 1, acc_b}
-        {a, b} -> {acc_a, acc_b + 1}
+        _ -> {acc_a, acc_b + 1}
       end
     end)
   end

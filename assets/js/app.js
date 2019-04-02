@@ -22,6 +22,6 @@ liveSocket.connect()
 
 import socket from "./socket"
 
-import Scoreboard from "./scoreboard"
+// import Scoreboard from "./scoreboard"
 
-Scoreboard.init(socket)
+// Scoreboard.init(socket)

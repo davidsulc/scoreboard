@@ -26,6 +26,10 @@ defmodule Scoreboard.GameState do
     GenServer.call(@name, :state)
   end
 
+  def inc_a() do
+    GenServer.call(@name, :inc_a)
+  end
+
   def inc_score(side) do
     GenServer.call(@name, {:inc_score, side})
   end
@@ -39,6 +43,12 @@ defmodule Scoreboard.GameState do
   end
 
   def handle_call(:state, _from, state) do
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call(:inc_a, _from, %{current_set: {a, b}} = state) do
+    state = %{state | current_set: {a + 1, b}}
+    Phoenix.PubSub.broadcast(Scoreboard.PubSub, "score", state)
     {:reply, {:ok, state}, state}
   end
 
