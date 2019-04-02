@@ -3,20 +3,12 @@ defmodule ScoreboardWeb.ScoreLive do
 
   alias ScoreboardWeb.ScoreView
 
-  require Logger
-
   def render(assigns) do
-    Logger.warn("in render")
     ScoreView.render("index.html", assigns)
   end
 
   def mount(_session, socket) do
-    Logger.warn("in mount")
-    if connected?(socket) do
-      subscribe = Phoenix.PubSub.subscribe(Scoreboard.PubSub, "score")
-    else
-      Logger.warn("not connected")
-    end
+    if connected?(socket), do: Phoenix.PubSub.subscribe(Scoreboard.PubSub, "score")
 
     {:ok, state} = Scoreboard.GameState.state()
 
