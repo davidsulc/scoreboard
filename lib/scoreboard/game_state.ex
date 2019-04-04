@@ -26,6 +26,10 @@ defmodule Scoreboard.GameState do
     GenServer.call(@name, :state)
   end
 
+  def merge(state) when is_map(state) do
+    GenServer.call(@name, {:merge, state})
+  end
+
   def inc_a() do
     GenServer.call(@name, :inc_a)
   end
@@ -48,6 +52,13 @@ defmodule Scoreboard.GameState do
 
   def handle_call(:state, _from, state) do
     {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:merge, state_update}, _from, state) do
+    state
+    # TODO validate state_update w/ changeset
+    |> Map.merge(state_update)
+    |> handle_state_update()
   end
 
   def handle_call(:inc_a, _from, %{current_set: {a, b}} = state) do

@@ -1,0 +1,21 @@
+<style type="text/css">
+  input[type="text"] {
+    width: auto;
+  }
+</style>
+
+<%= form_for @conn, Routes.game_setup_path(@conn, :set), [method: :put, as: :game], fn f -> %>
+  <%= text_input f, :team_a, value: @conn.assigns[:state].team_a %>
+  <%= text_input f, :team_b, value: @conn.assigns[:state].team_b %>
+  <br/>
+
+  <%= for set <- 0..4 do %>
+    <%= for team <- ~w(a b) do %>
+      <%= text_input f, :"set_#{set}_#{team}", name: "game[sets][#{set}][#{team}]" %>
+    <% end %>
+    <br/>
+  <% end %>
+
+  <a href="/scorekeeper" class="button button-outline">Cancel</a>
+  <%= submit "Save" %>
+<% end %>

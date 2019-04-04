@@ -20,6 +20,8 @@ defmodule ScoreboardWeb.Router do
 
     live "/", ScoreLive
     live "/scorekeeper", ScorekeeperLive
+    get "/setup", GameSetupController, :index
+    put "/setup", GameSetupController, :set
   end
 
   # Other scopes may use custom stacks.
