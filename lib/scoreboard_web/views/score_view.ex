@@ -3,8 +3,8 @@ defmodule ScoreboardWeb.ScoreView do
 
   def team_name(state, team), do: Map.get(state, team, "")
 
-  def current_score(%{current_set: {a, _b}}, :team_a), do: a
-  def current_score(%{current_set: {_a, b}}, :team_b), do: b
+  def current_score(%{sets: [{a, _b} | _]}, :team_a), do: a
+  def current_score(%{sets: [{_a, b} | _]}, :team_b), do: b
 
   def pretty_sets(%{scorekeeper_display_order: display_order, sets: sets}, display_order) do
     pretty_sets(sets)
@@ -18,8 +18,10 @@ defmodule ScoreboardWeb.ScoreView do
 
   defp reverse_set_scores({a, b}), do: {b, a}
 
-  defp pretty_sets(sets) do
-    Enum.map(sets, fn set ->
+  defp pretty_sets([_current_set | finished_sets]) do
+    finished_sets
+    |> Enum.reverse()
+    |> Enum.map(fn set ->
       case set do
         {left, right} when left > right -> {set_to_string(set), ""}
         set -> {"", set_to_string(set)}
@@ -37,8 +39,8 @@ defmodule ScoreboardWeb.ScoreView do
     end
   end
 
-  defp set_count(sets) when is_list(sets) do
-    Enum.reduce(sets, {0, 0}, fn set, {acc_a, acc_b} ->
+  defp set_count([_current_set | finished_sets]) do
+    Enum.reduce(finished_sets, {0, 0}, fn set, {acc_a, acc_b} ->
       case set do
         {a, b} when a > b -> {acc_a + 1, acc_b}
         _ -> {acc_a, acc_b + 1}

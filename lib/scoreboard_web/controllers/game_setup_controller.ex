@@ -23,8 +23,8 @@ defmodule ScoreboardWeb.GameSetupController do
 
   # TODO improve state conversion
   defp to_game_state(params) do
-    {params, set_info} = process_sets(params)
-    to_game_state(params, set_info)
+    {params, sets} = process_sets(params)
+    to_game_state(params, %{sets: sets})
   end
 
   defp to_game_state(%{} = params, state) when map_size(params) == 0 do
@@ -44,7 +44,7 @@ defmodule ScoreboardWeb.GameSetupController do
   end
 
   defp process_sets(%{"sets" => set_params} = params) do
-    [current | rest] =
+    set_scores =
       4..0
       |> Enum.map(&Integer.to_string/1)
       |> Enum.map(&Map.get(set_params, &1))
@@ -59,7 +59,7 @@ defmodule ScoreboardWeb.GameSetupController do
     # TODO handle last set -> current set
     {
       Map.delete(params, "sets"),
-      %{current_set: current, sets: Enum.reverse(rest)}
+      set_scores
     }
   end
 end

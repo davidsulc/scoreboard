@@ -8,7 +8,7 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   end
 
   def mount(_session, socket) do
-    {:ok, %{current_set: {a, b}} = state} = Scoreboard.GameState.state()
+    {:ok, %{sets: [{a, b} | _]} = state} = Scoreboard.GameState.state()
 
     socket =
       socket
