@@ -17,7 +17,7 @@ defmodule Scoreboard.GameState do
     GenServer.call(@name, {:merge, state})
   end
 
-  def init(params) do
+  def init(_params) do
     {:ok, %State{}}
   end
 
@@ -26,16 +26,22 @@ defmodule Scoreboard.GameState do
   end
 
   def handle_call({:merge, state_update}, _from, state) do
-    state
-    # TODO validate state_update w/ changeset
-    |> Map.merge(state_update)
-    # TODO
-    # |> State.update_win_conditions()
-    |> handle_state_update()
+    state =
+      state
+      # TODO validate state_update w/ changeset
+      |> State.merge(state_update)
+      |> State.check_set_over()
+      |> case do
+        %{set_over: true} = state -> State.end_set(state)
+        state -> state
+      end
+      |> broadcast_state()
+
+    {:reply, {:ok, state}, state}
   end
 
-  defp handle_state_update(state) do
+  defp broadcast_state(state) do
     Phoenix.PubSub.broadcast(Scoreboard.PubSub, "score", state)
-    {:reply, {:ok, state}, state}
+    state
   end
 end

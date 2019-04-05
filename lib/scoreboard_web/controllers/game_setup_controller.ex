@@ -12,9 +12,10 @@ defmodule ScoreboardWeb.GameSetupController do
   end
 
   def set(conn, %{"game" => params}) do
-    params
-    |> to_game_state()
-    |> Scoreboard.GameState.merge()
+    {:ok, _} =
+      params
+      |> to_game_state()
+      |> Scoreboard.GameState.merge()
 
     # redirect(conn, to: Routes.scorekeeper_path(conn, :index))
     # TODO Routes path
