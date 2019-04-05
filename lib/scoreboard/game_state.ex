@@ -1,22 +1,9 @@
 defmodule Scoreboard.GameState do
   use GenServer
 
-  @name __MODULE__
+  alias Scoreboard.GameState.State
 
-  defmodule State do
-    defstruct [
-      scorekeeper_display_order: {:team_a, :team_b},
-      team_a: "TV Murten",
-      team_b: "VBC Schmitten",
-      current_set: {8, 11},
-      sets: [
-        {19, 25},
-        {27, 25},
-        {22, 25},
-        {25, 23}
-      ]
-    ]
-  end
+  @name __MODULE__
 
   def start_link(params) do
     GenServer.start_link(__MODULE__, [params], name: @name)
@@ -42,6 +29,8 @@ defmodule Scoreboard.GameState do
     state
     # TODO validate state_update w/ changeset
     |> Map.merge(state_update)
+    # TODO
+    # |> State.update_win_conditions()
     |> handle_state_update()
   end
 
