@@ -1,6 +1,8 @@
 defmodule ScoreboardWeb.GameSetupController do
   use ScoreboardWeb, :controller
 
+  alias Scoreboard.GameState.State
+
   # TODO validate changeset w/ live view (e.g. no negative scores, set scores make sense, etc.)
 
   def index(conn, _params) do
@@ -13,8 +15,8 @@ defmodule ScoreboardWeb.GameSetupController do
 
   def set(conn, %{"game" => params}) do
     {:ok, _} =
-      params
-      |> to_game_state()
+      %State{}
+      |> Map.merge(to_game_state(params))
       |> Scoreboard.GameState.merge()
 
     # redirect(conn, to: Routes.scorekeeper_path(conn, :index))
