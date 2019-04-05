@@ -3,6 +3,8 @@ defmodule ScoreboardWeb.ScoreView do
 
   def team_name(state, team), do: Map.get(state, team, "")
 
+  def game_over(_), do: false
+
   def current_score(%{sets: [{a, _b} | _]}, :team_a), do: a
   def current_score(%{sets: [{_a, b} | _]}, :team_b), do: b
 
