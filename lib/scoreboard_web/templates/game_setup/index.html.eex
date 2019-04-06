@@ -1,8 +1,15 @@
 <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
 
 <style type="text/css">
+  body {
+    background: center / contain no-repeat url(<%= Routes.static_path(@conn, "/images/logo-bg.png") %>);
+  }
+</style>
+
+<style type="text/css">
   input[type="text"] {
     width: auto;
+    background-color: rgba(255, 255, 255, .6);
   }
 </style>
 
