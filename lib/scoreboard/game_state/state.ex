@@ -19,8 +19,16 @@ defmodule Scoreboard.GameState.State do
   end
 
   def merge(%__MODULE__{} = state, %{} = state_update) do
-    Map.merge(state, state_update)
+    state
+    |> Map.merge(state_update)
+    |> ensure_starting_set()
   end
+
+  defp ensure_starting_set(%__MODULE__{sets: []} = state) do
+    %{state | sets: [{0, 0}]}
+  end
+
+  defp ensure_starting_set(%__MODULE__{} = state), do: state
 
   defp check_game_over(%__MODULE__{sets: sets} = state) do
     game_over =
