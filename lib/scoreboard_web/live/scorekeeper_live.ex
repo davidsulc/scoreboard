@@ -4,18 +4,24 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   alias ScoreboardWeb.ScorekeeperView
 
   def render(assigns) do
-    ScorekeeperView.render("index.html", assigns)
+    Phoenix.View.render(ScorekeeperView, "index.html", assigns)
   end
 
   def mount(_session, socket) do
+    if connected?(socket), do: Phoenix.PubSub.subscribe(Scoreboard.PubSub, "score")
+
     {:ok, state} = Scoreboard.GameState.state()
-    {a, b} = Scoreboard.GameState.State.current_set(state)
 
     socket =
       socket
-      |> assign(:score, %{left: a, right: b})
       |> assign(:state, state)
-    #{:ok, assign(socket, :score, %{left: a, right: b})}
-    {:ok, socket}
+      |> assign(:left_team, :team_a)
+      |> assign(:right_team, :team_b)
+
+    {:ok, assign(socket, :conn, socket)}
+  end
+
+  def handle_info(%Scoreboard.GameState.State{} = state, socket) do
+    {:noreply, assign(socket, :state, state)}
   end
 end
