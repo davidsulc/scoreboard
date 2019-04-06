@@ -20,6 +20,7 @@
     <br/>
   <% end %>
 
+  <a href="?new_game=true" class="button button-outline" style="margin-right: 70px;">New game</a>
   <a href="/scorekeeper" class="button button-outline">Cancel</a>
   <%= submit "Save" %>
 <% end %>

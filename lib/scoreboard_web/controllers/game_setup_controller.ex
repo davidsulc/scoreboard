@@ -5,8 +5,16 @@ defmodule ScoreboardWeb.GameSetupController do
 
   # TODO validate changeset w/ live view (e.g. no negative scores, set scores make sense, etc.)
 
-  def index(conn, _params) do
-    {:ok, state} = Scoreboard.GameState.state()
+  def index(conn, params) do
+    state =
+      case params["new_game"] do
+        "true" ->
+          %State{}
+
+        _ ->
+          {:ok, state} = Scoreboard.GameState.state()
+          state
+      end
 
     conn
     |> assign(:state, state)
