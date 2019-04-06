@@ -3,15 +3,9 @@ defmodule Scoreboard.GameState.State do
     scorekeeper_display_order: {:team_a, :team_b},
     game_over: false,
     set_over: false,
-    team_a: "TV Murten",
-    team_b: "VBC Schmitten",
-    sets: [
-      {8, 11},
-      {19, 25},
-      {27, 25},
-      {22, 25},
-      {25, 23}
-    ]
+    team_a: "",
+    team_b: "",
+    sets: []
   ]
 
   def end_set(%__MODULE__{sets: sets} = state) do
