@@ -5,7 +5,7 @@ defmodule Scoreboard.GameState.State do
     set_over: false,
     team_a: "",
     team_b: "",
-    sets: []
+    sets: [{0, 0}]
   ]
 
   def end_set(%__MODULE__{sets: sets} = state) do
