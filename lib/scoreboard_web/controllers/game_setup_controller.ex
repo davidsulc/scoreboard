@@ -51,7 +51,7 @@ defmodule ScoreboardWeb.GameSetupController do
       4..0
       |> Enum.map(&Integer.to_string/1)
       |> Enum.map(&Map.get(set_params, &1))
-      |> Enum.map(fn %{"a" => a, "b" => b} ->
+      |> Enum.map(fn %{"team_a" => a, "team_b" => b} ->
         {a, b}
       end)
       |> Enum.filter(fn {a, b} ->
@@ -59,7 +59,6 @@ defmodule ScoreboardWeb.GameSetupController do
       end)
       |> Enum.map(fn {a, b} -> {String.to_integer(a), String.to_integer(b)} end)
 
-    # TODO handle last set -> current set
     {
       Map.delete(params, "sets"),
       set_scores

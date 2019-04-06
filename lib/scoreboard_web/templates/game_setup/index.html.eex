@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+
 <style type="text/css">
   input[type="text"] {
     width: auto;
@@ -10,8 +12,8 @@
   <br/>
 
   <%= for set <- 0..4 do %>
-    <%= for team <- ~w(a b) do %>
-      <%= text_input f, :"set_#{set}_#{team}", name: "game[sets][#{set}][#{team}]" %>
+    <%= for team <- [:team_a, :team_b] do %>
+      <%= input_for_set f, @conn.assigns[:state], set: set, team: team %>
     <% end %>
     <br/>
   <% end %>

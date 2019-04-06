@@ -90,4 +90,8 @@ defmodule Scoreboard.GameState.State do
   defp set_over?({a, b}, min) do
     (a >= min or b >= min) and abs(a - b) > 1
   end
+
+  def get_set(%__MODULE__{sets: sets}, set_index) do
+    Enum.at(sets, -1 - set_index)
+  end
 end
