@@ -7,11 +7,13 @@
 </style>
 
 <%= form_for @conn, Routes.game_setup_path(@conn, :set), [method: :put, as: :game], fn f -> %>
+  <label>Teams: </label>
   <%= text_input f, :team_a, value: @conn.assigns[:state].team_a %>
   <%= text_input f, :team_b, value: @conn.assigns[:state].team_b %>
   <br/>
 
   <%= for set <- 0..4 do %>
+    <label>Set <%= set + 1 %>: </label>
     <%= for team <- [:team_a, :team_b] do %>
       <%= input_for_set f, @conn.assigns[:state], set: set, team: team %>
     <% end %>
