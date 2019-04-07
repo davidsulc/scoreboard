@@ -24,6 +24,12 @@ defmodule Scoreboard.GameState.State do
     |> ensure_starting_set()
   end
 
+  def change_score(%__MODULE__{sets: [current | finished]} = state, change) when is_function(change, 1) do
+    state
+    |> Map.replace!(:sets, [change.(current) | finished])
+    |> check_set_over()
+  end
+
   defp ensure_starting_set(%__MODULE__{sets: []} = state) do
     %{state | sets: [{0, 0}]}
   end

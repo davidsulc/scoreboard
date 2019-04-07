@@ -16,10 +16,16 @@ body {
 
     <%= if !game_over?(@state) do %>
       <div id="current-set" class="row">
-        <button class="button" type="button">+</button>
-        <span class="half-row-col" style="text-align: right;"><%= current_score(@state, @left_team) %></span>
+        <span class="half-row-col" style="text-align: right;">
+          <button class="button" style="width: 10vh; height: 10vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="dec-left">-</button>
+          <button class="button" style="width: 20vh; height: 20vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
+          <%= current_score(@state, @left_team) %></span>
         <span style="margin: 0 0.5ex;">-</span>
-        <span class="half-row-col"><%= current_score(@state, @right_team) %></span>
+        <span class="half-row-col">
+          <%= current_score(@state, @right_team) %>
+          <button class="button" style="width: 20vh; height: 20vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="inc-right">+</button>
+          <button class="button" style="width: 10vh; height: 10vh; vertical-align: middle;" type="button" phx-click="dec-right">-</button>
+        </span>
       </div>
     <% end %>
 

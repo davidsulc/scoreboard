@@ -17,6 +17,14 @@ defmodule Scoreboard.GameState do
     GenServer.call(@name, {:merge, state})
   end
 
+  def inc(team) do
+    GenServer.call(@name, {:inc, team})
+  end
+
+  def dec(team) do
+    GenServer.call(@name, {:dec, team})
+  end
+
   def init(_params) do
     {:ok, %State{}}
   end
@@ -38,6 +46,40 @@ defmodule Scoreboard.GameState do
       |> broadcast_state()
 
     {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:inc, :team_a}, _from, %{sets: [{a, b} | finished]} = state) do
+    state = change_score(state, fn {a, b} -> {a + 1, b} end)
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:inc, :team_b}, _from, %{sets: [{a, b} | finished]} = state) do
+    state = change_score(state, fn {a, b} -> {a, b + 1} end)
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:dec, :team_a}, _from, %{sets: [{0, _} | _]} = state) do
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:dec, :team_b}, _from, %{sets: [{_, 0} | _]} = state) do
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:dec, :team_a}, _from, %{sets: [{a, b} | finished]} = state) do
+    state = change_score(state, fn {a, b} -> {a - 1, b} end)
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call({:dec, :team_b}, _from, %{sets: [{a, b} | finished]} = state) do
+    state = change_score(state, fn {a, b} -> {a, b - 1} end)
+    {:reply, {:ok, state}, state}
+  end
+
+  defp change_score(state, change) when is_function(change, 1) do
+    state
+    |> State.change_score(change)
+    |> broadcast_state()
   end
 
   defp broadcast_state(state) do
