@@ -1,5 +1,8 @@
+<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+
 <style type="text/css">
 body {
+  max-width: 100vw !important;
   background-image: url(<%= Routes.static_path(@conn, "/images/bg-pattern.png") %>);
   color: white;
 }
@@ -17,14 +20,15 @@ body {
     <%= if !game_over?(@state) do %>
       <div id="current-set" class="row">
         <span class="half-row-col" style="text-align: right;">
-          <button class="button" style="width: 10vh; height: 10vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="dec-left">-</button>
-          <button class="button" style="width: 20vh; height: 20vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
-          <%= current_score(@state, @left_team) %></span>
+          <button class="button button-outline" style="width: 10vh; height: 10vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="dec-left">-</button>
+          <button class="button button-outline" style="width: 20vh; height: 20vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
+          <div class="score"><%= current_score(@state, @left_team) %></div>
+        </span>
         <span style="margin: 0 0.5ex;">-</span>
         <span class="half-row-col">
-          <%= current_score(@state, @right_team) %>
-          <button class="button" style="width: 20vh; height: 20vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="inc-right">+</button>
-          <button class="button" style="width: 10vh; height: 10vh; vertical-align: middle;" type="button" phx-click="dec-right">-</button>
+          <div class="score"><%= current_score(@state, @right_team) %></div>
+          <button class="button button-outline" style="width: 20vh; height: 20vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="inc-right">+</button>
+          <button class="button button-outline" style="width: 10vh; height: 10vh; vertical-align: middle;" type="button" phx-click="dec-right">-</button>
         </span>
       </div>
     <% end %>

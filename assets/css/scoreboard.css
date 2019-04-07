@@ -1,4 +1,3 @@
-/* TODO have webpack copy this file to /priv on build */
 html {
   font-family: arial;
 }
@@ -31,6 +30,10 @@ html {
 
 #current-set {
   font-size: 16vh;
+}
+
+#current-set .score {
+  display: inline;
 }
 
 #sets-container.game-over {
@@ -80,6 +83,20 @@ html {
 
 .svrf-logo {
   max-height: 4vh;
+}
+
+.button.button-outline {
+  border-color: #606c76;
+  background-color: transparent;
+
+  color: #606c76;
+  font-size: 10vh;
+}
+
+.button.button-outline:hover {
+  border-color: #62b33a;
+  background-color: #62b33a;
+  color: black;
 }
 
 table.fixed {
