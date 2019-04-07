@@ -1,6 +1,7 @@
 defmodule Scoreboard.GameState.State do
   defstruct [
     scorekeeper_display_order: {:team_a, :team_b},
+    can_be_switched: true,
     game_over: false,
     set_over: false,
     team_a: "",
@@ -18,6 +19,10 @@ defmodule Scoreboard.GameState.State do
     |> Map.replace!(:set_over, false)
   end
 
+  def switch_sides(%__MODULE__{scorekeeper_display_order: {old_left, old_right}} = state) do
+    %{state | scorekeeper_display_order: {old_right, old_left}}
+  end
+
   def merge(%__MODULE__{} = state, %{} = state_update) do
     state
     |> Map.merge(state_update)
@@ -27,7 +32,7 @@ defmodule Scoreboard.GameState.State do
   def change_score(%__MODULE__{sets: [current | finished]} = state, change) when is_function(change, 1) do
     state
     |> Map.replace!(:sets, [change.(current) | finished])
-    |> check_set_over()
+    |> check_score_conditions()
   end
 
   defp ensure_starting_set(%__MODULE__{sets: []} = state) do
@@ -61,6 +66,8 @@ defmodule Scoreboard.GameState.State do
 
   def current_set(%__MODULE__{sets: [current | _]}), do: current
 
+  def can_switch_sides?(%__MODULE__{can_be_switched: switch}), do: switch
+
   def tie_break?(%__MODULE__{sets: sets}), do: length(sets) > 4
 
   def game_over?(%__MODULE__{game_over: game_over}), do: game_over
@@ -83,7 +90,26 @@ defmodule Scoreboard.GameState.State do
     |> Enum.map(fun)
   end
 
-  def check_set_over(%__MODULE__{} = state) do
+  def check_score_conditions(%__MODULE__{} = state) do
+    state
+    |> check_set_over()
+    |> check_can_switch_sides()
+  end
+
+  defp check_can_switch_sides(%__MODULE__{sets: [{0, 0}]} = state) do
+    %{state | can_be_switched: true}
+  end
+
+  defp check_can_switch_sides(%__MODULE__{sets: [{a, b} | _] = sets} = state)
+      when length(sets) > 4 and ((a == 8 and b < 8) or (a < 8 and b == 8)) do
+    %{state | can_be_switched: true}
+  end
+
+  defp check_can_switch_sides(%__MODULE__{} = state) do
+    %{state | can_be_switched: false}
+  end
+
+  defp check_set_over(%__MODULE__{} = state) do
     %{state | set_over: current_set_over?(state)}
   end
 

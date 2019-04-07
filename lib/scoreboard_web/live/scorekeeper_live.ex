@@ -5,6 +5,8 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   alias Scoreboard.GameState.State
   alias ScoreboardWeb.ScorekeeperView
 
+  require Logger
+
   def render(assigns) do
     Phoenix.View.render(ScorekeeperView, "index.html", assigns)
   end
@@ -21,12 +23,17 @@ defmodule ScoreboardWeb.ScorekeeperLive do
       |> assign(:left_team, left)
       |> assign(:right_team, right)
 
-      # TODO probably better way of handling this...
-    {:ok, assign(socket, :conn, socket)}
+    {:ok, socket}
   end
 
   def handle_info(%Scoreboard.GameState.State{} = state, socket) do
     {:noreply, assign(socket, :state, state)}
+  end
+
+  def handle_event("switch", _, socket) do
+    GameState.switch_sides()
+
+    {:noreply, socket}
   end
 
   def handle_event("inc-left", _, socket) do
