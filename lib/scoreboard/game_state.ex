@@ -29,6 +29,10 @@ defmodule Scoreboard.GameState do
     GenServer.call(@name, {:dec, team})
   end
 
+  def end_set() do
+    GenServer.call(@name, :end_set)
+  end
+
   def init(_params) do
     {:ok, %State{}}
   end
@@ -86,6 +90,15 @@ defmodule Scoreboard.GameState do
 
   def handle_call({:dec, :team_b}, _from, state) do
     state = change_score(state, fn {a, b} -> {a, b - 1} end)
+    {:reply, {:ok, state}, state}
+  end
+
+  def handle_call(:end_set, _from, state) do
+    state =
+      state
+      |> State.end_set()
+      |> broadcast_state()
+
     {:reply, {:ok, state}, state}
   end
 

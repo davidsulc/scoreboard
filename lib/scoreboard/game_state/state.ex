@@ -10,13 +10,20 @@ defmodule Scoreboard.GameState.State do
   ]
 
   def end_set(%__MODULE__{sets: sets} = state) do
-    state
-    |> check_game_over()
-    |> case do
-      %{game_over: true} = state -> state
-      %{game_over: false} = state -> %{state | sets: [{0, 0} | sets]}
+    state =
+      state
+      |> check_game_over()
+      |> case do
+        %{game_over: true} = state -> state
+        %{game_over: false} = state -> %{state | sets: [{0, 0} | sets]}
+      end
+      |> Map.replace!(:set_over, false)
+
+    if tie_break?(state) do
+      state
+    else
+      switch_sides(state)
     end
-    |> Map.replace!(:set_over, false)
   end
 
   def switch_sides(%__MODULE__{scorekeeper_display_order: {old_left, old_right}} = state) do
@@ -69,6 +76,8 @@ defmodule Scoreboard.GameState.State do
   def can_switch_sides?(%__MODULE__{can_be_switched: switch}), do: switch
 
   def tie_break?(%__MODULE__{sets: sets}), do: length(sets) > 4
+
+  def set_over?(%__MODULE__{set_over: set_over}), do: set_over
 
   def game_over?(%__MODULE__{game_over: game_over}), do: game_over
 

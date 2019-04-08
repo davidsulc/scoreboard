@@ -15,9 +15,11 @@ body {
     <div id="team-names" class="row">
       <span class="half-row-col title"><%= team_name(@state, :left) %></span>
 
-      <%= if can_switch_sides?(@state) do %>
-        <button id="switch-button" class="button" phx-click="switch"> <-> </button>
-      <% end %>
+      <button id="switch-button" class="button"
+          <%= if !can_switch_sides?(@state) do %>style="display: none;"<% end %>
+          phx-click="switch">
+        <->
+      </button>
 
       <span class="half-row-col title"><%= team_name(@state, :right) %></span>
     </div>
@@ -39,6 +41,15 @@ body {
     <% end %>
 
     <div id="sets-container" <%= if game_over?(@state) do %>class="game-over"<% end %>>
+      <%= if set_over?(@state) do %>
+        <div class="set-end-confirmation">
+          End current set?
+          <button class="button" phx-click="end-set">
+            Ok
+          </button>
+        </div>
+      <% end %>
+
       <div class="summary title">
         <span class="border wrapper">
           <span class="set-count"><%= sets_count(@state, :left) %></span>

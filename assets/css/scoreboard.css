@@ -28,6 +28,12 @@ html {
   font-size: 8vh;
 }
 
+#switch-button {
+  height: 8vh;
+  margin-top: 2vh;
+  font-size: 10vh;
+}
+
 #current-set {
   font-size: 16vh;
 }
@@ -85,6 +91,12 @@ html {
   max-height: 4vh;
 }
 
+.button {
+  border-color: #62b33a;
+  background-color: #62b33a;
+  color: black;
+}
+
 .button.button-outline {
   border-color: #606c76;
   background-color: transparent;
@@ -97,6 +109,17 @@ html {
   border-color: #62b33a;
   background-color: #62b33a;
   color: black;
+}
+
+.set-end-confirmation {
+  text-align: center;
+  border: none;
+  font-size: 6vh;
+}
+
+.set-end-confirmation .button {
+  height: 5vh;
+  font-size: 4vh;
 }
 
 table.fixed {

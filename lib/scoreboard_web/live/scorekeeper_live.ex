@@ -63,4 +63,10 @@ defmodule ScoreboardWeb.ScorekeeperLive do
 
     {:noreply, socket}
   end
+
+  def handle_event("end-set", _, socket) do
+    GameState.end_set()
+
+    {:noreply, socket}
+  end
 end
