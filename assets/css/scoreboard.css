@@ -40,7 +40,9 @@ html {
 }
 
 #current-set .score {
-  display: inline;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.2em;
 }
 
 #sets-container.game-over {
