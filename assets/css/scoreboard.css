@@ -29,9 +29,10 @@ html {
 }
 
 #switch-button {
-  height: 8vh;
+  height: 7.5vh;
+  width: 21vh;
   margin-top: 2vh;
-  font-size: 10vh;
+  font-size: 6vh;
 }
 
 #current-set {
@@ -115,6 +116,7 @@ html {
   text-align: center;
   border: none;
   font-size: 6vh;
+  min-height: 10vh;
 }
 
 .set-end-confirmation .button {
