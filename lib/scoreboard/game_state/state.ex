@@ -41,6 +41,7 @@ defmodule Scoreboard.GameState.State do
     state
     |> Map.replace!(:sets, [change.(current) | finished])
     |> check_score_conditions()
+    |> check_can_switch_sides()
   end
 
   defp ensure_starting_set(%__MODULE__{sets: []} = state) do
@@ -106,7 +107,6 @@ defmodule Scoreboard.GameState.State do
     state
     |> check_invalid_score()
     |> check_set_over()
-    |> check_can_switch_sides()
   end
 
   defp check_invalid_score(%__MODULE__{} = state) do

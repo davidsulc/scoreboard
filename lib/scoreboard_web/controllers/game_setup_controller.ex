@@ -35,7 +35,7 @@ defmodule ScoreboardWeb.GameSetupController do
   # TODO improve state conversion
   defp to_game_state(params) do
     {params, sets} = process_sets(params)
-    to_game_state(params, %{sets: sets})
+    to_game_state(params, %{sets: sets, can_be_switched: true})
   end
 
   defp to_game_state(%{} = params, state) when map_size(params) == 0 do
