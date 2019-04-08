@@ -38,9 +38,9 @@ body {
     <div id="sets-container" <%= if game_over?(@state) do %>class="game-over"<% end %>>
       <div class="summary title">
         <span class="border wrapper">
-          <span class="set-count"><%= sets_count(@state, :left) %></span>
+          <span class="set-count"><%= sets_count(@state, :team_a) %></span>
           Sets
-          <span class="set-count"><%= sets_count(@state, :right) %></span>
+          <span class="set-count"><%= sets_count(@state, :team_b) %></span>
         </span>
       </div>
 
