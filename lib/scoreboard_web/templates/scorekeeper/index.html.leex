@@ -10,7 +10,7 @@ body {
 
 <link rel="stylesheet" href="<%= Routes.static_path(@socket, "/css/scoreboard.css") %>">
 
-<div id="wrapper">
+<div id="wrapper" phx-keyup="keyup" phx-target="window">
   <div id="scoreboard" class="border">
     <div id="team-names" class="row">
       <span class="half-row-col title"><%= team_name(@state, :left) %></span>
@@ -44,7 +44,7 @@ body {
       <div class="set-end-confirmation">
         <%= if set_over?(@state) do %>
           End current set?
-          <button class="button" phx-click="end-set">
+          <button type="button" class="button" phx-click="end-set">
             Ok
           </button>
         <% end %>

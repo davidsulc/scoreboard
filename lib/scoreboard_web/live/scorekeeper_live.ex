@@ -5,7 +5,11 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   alias Scoreboard.GameState.State
   alias ScoreboardWeb.ScorekeeperView
 
-  require Logger
+  @left_team_inc_key "a"
+  @left_team_dec_key "A"
+  @right_team_inc_key "l"
+  @right_team_dec_key "L"
+  @switch_sides_key "u"
 
   def render(assigns) do
     Phoenix.View.render(ScorekeeperView, "index.html", assigns)
@@ -30,43 +34,68 @@ defmodule ScoreboardWeb.ScorekeeperLive do
     {:noreply, assign(socket, :state, state)}
   end
 
+  def handle_event("keyup", @left_team_inc_key, socket) do
+    change_score(socket, :left, :inc)
+    {:noreply, socket}
+  end
+
+  def handle_event("keyup", @left_team_dec_key, socket) do
+    change_score(socket, :left, :dec)
+    {:noreply, socket}
+  end
+
+  def handle_event("keyup", @right_team_inc_key, socket) do
+    change_score(socket, :right, :inc)
+    {:noreply, socket}
+  end
+
+  def handle_event("keyup", @right_team_dec_key, socket) do
+    change_score(socket, :right, :dec)
+    {:noreply, socket}
+  end
+
+  def handle_event("keyup", @switch_sides_key, socket) do
+    GameState.switch_sides()
+    {:noreply, socket}
+  end
+
+  def handle_event("keyup", _key, socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("switch", _, socket) do
     GameState.switch_sides()
-
     {:noreply, socket}
   end
 
-  def handle_event("inc-left", _, socket) do
-    {left, _} = State.display_order(socket.assigns.state)
-    GameState.inc(left)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("inc-right", _, socket) do
-    {_, right} = State.display_order(socket.assigns.state)
-    GameState.inc(right)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("dec-left", _, socket) do
-    {left, _} = State.display_order(socket.assigns.state)
-    GameState.dec(left)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("dec-right", _, socket) do
-    {_, right} = State.display_order(socket.assigns.state)
-    GameState.dec(right)
-
+  def handle_event(event, _, socket) when event in ~w(dec-left inc-left dec-right inc-right) do
+    [operation, side] = event |> String.split("-") |> Enum.map(&String.to_atom/1)
+    change_score(socket, side, operation)
     {:noreply, socket}
   end
 
   def handle_event("end-set", _, socket) do
     GameState.end_set()
-
     {:noreply, socket}
+  end
+
+  defp change_score(socket, :left, :inc) do
+    {left, _} = State.display_order(socket.assigns.state)
+    GameState.inc(left)
+  end
+
+  defp change_score(socket, :left, :dec) do
+    {left, _} = State.display_order(socket.assigns.state)
+    GameState.dec(left)
+  end
+
+  defp change_score(socket, :right, :inc) do
+    {_, right} = State.display_order(socket.assigns.state)
+    GameState.inc(right)
+  end
+
+  defp change_score(socket, :right, :dec) do
+    {_, right} = State.display_order(socket.assigns.state)
+    GameState.dec(right)
   end
 end
