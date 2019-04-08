@@ -28,13 +28,13 @@ body {
       <div id="current-set" class="row">
         <span class="half-row-col" style="text-align: right;">
           <button class="button button-outline" style="width: 10vh; height: 10vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="dec-left">-</button>
-          <button class="button button-outline" style="width: 20vh; height: 20vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
+          <button class="button button-outline" style="width: 18vh; height: 18vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
           <div class="score"><%= current_score(@state, :left) %></div>
         </span>
         <span style="margin: 0 0.5ex;">-</span>
         <span class="half-row-col">
           <div class="score"><%= current_score(@state, :right) %></div>
-          <button class="button button-outline" style="width: 20vh; height: 20vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="inc-right">+</button>
+          <button class="button button-outline" style="width: 18vh; height: 18vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="inc-right">+</button>
           <button class="button button-outline" style="width: 10vh; height: 10vh; vertical-align: middle;" type="button" phx-click="dec-right">-</button>
         </span>
       </div>
@@ -47,6 +47,12 @@ body {
           <button type="button" class="button" phx-click="end-set">
             Ok
           </button>
+
+          <%= if invalid_score?(@state) do %>
+            <p style="color: coral;">
+              &#9888; Invalid score &#9888;
+            </p>
+          <% end %>
         <% end %>
       </div>
 

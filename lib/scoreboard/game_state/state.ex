@@ -2,6 +2,7 @@ defmodule Scoreboard.GameState.State do
   defstruct [
     scorekeeper_display_order: {:team_a, :team_b},
     can_be_switched: true,
+    invalid_score: false,
     game_over: false,
     set_over: false,
     team_a: "",
@@ -77,6 +78,8 @@ defmodule Scoreboard.GameState.State do
 
   def tie_break?(%__MODULE__{sets: sets}), do: length(sets) > 4
 
+  def invalid_score?(%__MODULE__{invalid_score: invalid_score}), do: invalid_score
+
   def set_over?(%__MODULE__{set_over: set_over}), do: set_over
 
   def game_over?(%__MODULE__{game_over: game_over}), do: game_over
@@ -101,8 +104,17 @@ defmodule Scoreboard.GameState.State do
 
   def check_score_conditions(%__MODULE__{} = state) do
     state
+    |> check_invalid_score()
     |> check_set_over()
     |> check_can_switch_sides()
+  end
+
+  defp check_invalid_score(%__MODULE__{} = state) do
+    {a, b} = current_set(state)
+    set_end_min = set_end_min(state)
+    invalid_score = current_set_over?(state) && (a > set_end_min || b > set_end_min) && abs(a - b) > 2
+
+    %{state | invalid_score: invalid_score}
   end
 
   defp check_can_switch_sides(%__MODULE__{sets: [{0, 0}]} = state) do
@@ -122,12 +134,18 @@ defmodule Scoreboard.GameState.State do
     %{state | set_over: current_set_over?(state)}
   end
 
-  defp current_set_over?(%__MODULE__{} = state) do
-    set_end_min = if tie_break?(state), do: 15, else: 25
+  defp set_end_min(state) do
+    if tie_break?(state) do
+      15
+    else
+      25
+    end
+  end
 
+  defp current_set_over?(%__MODULE__{} = state) do
     state
     |> current_set()
-    |> set_over?(set_end_min)
+    |> set_over?(set_end_min(state))
   end
 
   defp set_over?({a, b}, min) do

@@ -2,6 +2,7 @@ defmodule ScoreboardWeb.ViewHelpers.Score do
   alias Scoreboard.GameState.State
 
   defdelegate can_switch_sides?(state), to: State
+  defdelegate invalid_score?(state), to: State
   defdelegate set_over?(state), to: State
   defdelegate game_over?(state), to: State
 
