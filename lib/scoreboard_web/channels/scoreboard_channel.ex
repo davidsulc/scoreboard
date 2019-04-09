@@ -6,7 +6,7 @@ defmodule ScoreboardWeb.ScoreboardChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (scoreboard:lobby).
   def handle_in("update", payload, socket) do
-    broadcast socket, "update", payload
+    broadcast(socket, "update", payload)
     {:noreply, socket}
   end
 end

@@ -7,10 +7,12 @@ defmodule ScoreboardWeb.GameSetupView do
     set = Keyword.fetch!(opts, :set)
     team = Keyword.fetch!(opts, :team)
 
-    text_input(f,
-               :"set_#{set}_#{team}",
-               name: "game[sets][#{set}][#{team}]",
-               value: get_set_score(state, set, team))
+    text_input(
+      f,
+      :"set_#{set}_#{team}",
+      name: "game[sets][#{set}][#{team}]",
+      value: get_set_score(state, set, team)
+    )
   end
 
   defp get_set_score(state, set, team) do

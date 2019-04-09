@@ -1,14 +1,12 @@
 defmodule Scoreboard.GameState.State do
-  defstruct [
-    scorekeeper_display_order: {:team_a, :team_b},
-    can_be_switched: true,
-    invalid_score: false,
-    game_over: false,
-    set_over: false,
-    team_a: "",
-    team_b: "",
-    sets: [{0, 0}]
-  ]
+  defstruct scorekeeper_display_order: {:team_a, :team_b},
+            can_be_switched: true,
+            invalid_score: false,
+            game_over: false,
+            set_over: false,
+            team_a: "",
+            team_b: "",
+            sets: [{0, 0}]
 
   def end_set(%__MODULE__{sets: sets} = state) do
     state =
@@ -37,7 +35,8 @@ defmodule Scoreboard.GameState.State do
     |> ensure_starting_set()
   end
 
-  def change_score(%__MODULE__{sets: [current | finished]} = state, change) when is_function(change, 1) do
+  def change_score(%__MODULE__{sets: [current | finished]} = state, change)
+      when is_function(change, 1) do
     state
     |> Map.replace!(:sets, [change.(current) | finished])
     |> check_score_conditions()
@@ -94,7 +93,7 @@ defmodule Scoreboard.GameState.State do
   defp finished_sets(%__MODULE__{game_over: true, sets: sets}), do: sets
 
   defp finished_sets(%__MODULE__{game_over: false, sets: [_current_set | finished_sets]}),
-      do: finished_sets
+    do: finished_sets
 
   def traverse_finished_sets(%__MODULE__{} = state, fun) do
     state
@@ -112,7 +111,9 @@ defmodule Scoreboard.GameState.State do
   defp check_invalid_score(%__MODULE__{} = state) do
     {a, b} = current_set(state)
     set_end_min = set_end_min(state)
-    invalid_score = current_set_over?(state) && (a > set_end_min || b > set_end_min) && abs(a - b) > 2
+
+    invalid_score =
+      current_set_over?(state) && (a > set_end_min || b > set_end_min) && abs(a - b) > 2
 
     %{state | invalid_score: invalid_score}
   end
@@ -122,7 +123,7 @@ defmodule Scoreboard.GameState.State do
   end
 
   defp check_can_switch_sides(%__MODULE__{sets: [{a, b} | _] = sets} = state)
-      when length(sets) > 4 and ((a == 8 and b < 8) or (a < 8 and b == 8)) do
+       when length(sets) > 4 and ((a == 8 and b < 8) or (a < 8 and b == 8)) do
     %{state | can_be_switched: true}
   end
 

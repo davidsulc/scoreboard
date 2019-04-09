@@ -44,7 +44,7 @@ defmodule ScoreboardWeb.ViewHelpers.Score do
   end
 
   defp format_set_result({x, y}),
-      do: {set_to_string(x), set_to_string(y)}
+    do: {set_to_string(x), set_to_string(y)}
 
   defp set_to_string({a, b}), do: "#{a} - #{b}"
   defp set_to_string(""), do: ""
