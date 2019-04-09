@@ -19,7 +19,7 @@ defmodule ScoreboardWeb.ScorekeeperLive do
     if connected?(socket), do: Phoenix.PubSub.subscribe(Scoreboard.PubSub, "score")
 
     {:ok, state} = Scoreboard.GameState.state()
-    {left, right} = State.display_order(state)
+    {left, right} = State.scorekeeper_display_order(state)
 
     socket =
       socket
@@ -80,22 +80,22 @@ defmodule ScoreboardWeb.ScorekeeperLive do
   end
 
   defp change_score(socket, :left, :inc) do
-    {left, _} = State.display_order(socket.assigns.state)
+    {left, _} = State.scorekeeper_display_order(socket.assigns.state)
     GameState.inc(left)
   end
 
   defp change_score(socket, :left, :dec) do
-    {left, _} = State.display_order(socket.assigns.state)
+    {left, _} = State.scorekeeper_display_order(socket.assigns.state)
     GameState.dec(left)
   end
 
   defp change_score(socket, :right, :inc) do
-    {_, right} = State.display_order(socket.assigns.state)
+    {_, right} = State.scorekeeper_display_order(socket.assigns.state)
     GameState.inc(right)
   end
 
   defp change_score(socket, :right, :dec) do
-    {_, right} = State.display_order(socket.assigns.state)
+    {_, right} = State.scorekeeper_display_order(socket.assigns.state)
     GameState.dec(right)
   end
 end

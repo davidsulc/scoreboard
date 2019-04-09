@@ -19,13 +19,19 @@
   <%= text_input f, :team_b, value: @conn.assigns[:state].team_b %>
   <br/>
 
-  <%= for set <- 0..4 do %>
-    <label>Set <%= set + 1 %>: </label>
-    <%= for team <- [:team_a, :team_b] do %>
-      <%= input_for_set f, @conn.assigns[:state], set: set, team: team %>
+  <%= checkbox f, :invert_display, value: @conn.assigns[:state].invert_display %>
+  <label for="game_invert_display" style="display: inline;">Invert scoreboard display</label>
+  <br/>
+
+  <div style="margin-top: 3ex;">
+    <%= for set <- 0..4 do %>
+      <label>Set <%= set + 1 %>: </label>
+      <%= for team <- [:team_a, :team_b] do %>
+        <%= input_for_set f, @conn.assigns[:state], set: set, team: team %>
+      <% end %>
+      <br/>
     <% end %>
-    <br/>
-  <% end %>
+  </div>
 
   <a href="?new_game=true" class="button button-outline" style="margin-right: 70px;">New game</a>
   <a href="/scorekeeper" class="button button-outline">Cancel</a>

@@ -1,5 +1,7 @@
 defmodule Scoreboard.GameState.State do
   defstruct scorekeeper_display_order: {:team_a, :team_b},
+            scoreboard_display_order: {:team_a, :team_b},
+            invert_display: true,
             can_be_switched: true,
             invalid_score: false,
             game_over: false,
@@ -25,14 +27,31 @@ defmodule Scoreboard.GameState.State do
     end
   end
 
-  def switch_sides(%__MODULE__{scorekeeper_display_order: {old_left, old_right}} = state) do
-    %{state | scorekeeper_display_order: {old_right, old_left}}
+  def switch_sides(%__MODULE__{} = state) do
+    %{
+      scorekeeper_display_order: {old_sk_left, old_sk_right},
+      scoreboard_display_order: {old_sb_left, old_sb_right}
+    } = state
+
+    %{
+      state
+      | scorekeeper_display_order: {old_sk_right, old_sk_left},
+        scoreboard_display_order: {old_sb_right, old_sb_left}
+    }
   end
 
   def merge(%__MODULE__{} = state, %{} = state_update) do
-    state
-    |> Map.merge(state_update)
-    |> ensure_starting_set()
+    state =
+      state
+      |> Map.merge(state_update)
+      |> ensure_starting_set()
+
+    if state.invert_display do
+      {scorekeeper_left, scorekeeper_right} = state.scorekeeper_display_order
+      %{state | scoreboard_display_order: {scorekeeper_right, scorekeeper_left}}
+    else
+      state
+    end
   end
 
   def change_score(%__MODULE__{sets: [current | finished]} = state, change)
@@ -70,7 +89,9 @@ defmodule Scoreboard.GameState.State do
 
   def team_name(%__MODULE__{} = state, team), do: Map.get(state, team, "")
 
-  def display_order(%__MODULE__{scorekeeper_display_order: order}), do: order
+  def scoreboard_display_order(%__MODULE__{scoreboard_display_order: order}), do: order
+
+  def scorekeeper_display_order(%__MODULE__{scorekeeper_display_order: order}), do: order
 
   def current_set(%__MODULE__{sets: [current | _]}), do: current
 
