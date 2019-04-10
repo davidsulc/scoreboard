@@ -20,7 +20,7 @@ defmodule Scoreboard.GameState.State do
       end
       |> Map.replace!(:set_over, false)
 
-    if tie_break?(state) do
+    if game_over?(state) or tie_break?(state) do
       state
     else
       switch_sides(state)
