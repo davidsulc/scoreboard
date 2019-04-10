@@ -27,15 +27,13 @@ body {
       <span class="half-row-col title"><%= team_name(@state, :right) %></span>
     </div>
 
-    <%= if !game_over?(@state) do %>
-      <div id="current-set" class="row">
-        <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :left) %></span>
-        <span style="margin: 0 0.5ex;">-</span>
-        <span class="half-row-col"><%= current_score(@state, :right) %></span>
-      </div>
-    <% end %>
+    <div id="current-set" class="row <%= if game_over?(@state) do %>game-over<% end %>">
+      <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :left) %></span>
+      <span style="margin: 0 0.5ex;">-</span>
+      <span class="half-row-col"><%= current_score(@state, :right) %></span>
+    </div>
 
-    <div id="sets-container" <%= if game_over?(@state) do %>class="game-over"<% end %>>
+    <div id="sets-container">
       <div class="summary title">
         <span class="border wrapper">
           <span class="set-count"><%= sets_count(@state, :left) %></span>

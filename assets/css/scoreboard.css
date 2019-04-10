@@ -37,16 +37,21 @@ html {
 
 #current-set {
   font-size: 16vh;
+  max-height: 350px;
+  opacity: 1;
+}
+
+#current-set.game-over {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 4vh;
+  transition: opacity 1s linear, max-height 1.5s ease-in-out, margin-bottom 0.8s 0.6s linear;
 }
 
 #current-set .score {
   display: inline-block;
   flex: 0 0 auto;
   width: 1.2em;
-}
-
-#sets-container.game-over {
-  margin-top: 4vh;
 }
 
 #sets-container .summary {
