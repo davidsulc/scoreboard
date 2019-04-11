@@ -10,14 +10,14 @@ body {
 
 <link rel="stylesheet" href="<%= Routes.static_path(@socket, "/css/scoreboard.css") %>">
 
-<div id="wrapper" phx-keyup="keyup" phx-target="window">
-  <div id="scoreboard" class="border">
-    <div id="team-names" class="row">
+<div class="wrapper" phx-keyup="keyup" phx-target="window">
+  <div class="scoreboard border">
+    <div class="team-names row">
       <span class="half-row-col title"><%= team_name(@state, :left) %></span>
 
       <div style="display: inline; width: 21vh;">
         <%= if can_switch_sides?(@state) do %>
-          <button id="switch-button" class="button" phx-click="switch">&#x2B82;</button>
+          <button class="switch-button button" phx-click="switch">&#x2B82;</button>
         <% end %>
       </div>
 
@@ -25,7 +25,7 @@ body {
     </div>
 
     <%= if !game_over?(@state) do %>
-      <div id="current-set" class="row">
+      <div class="current-set row">
         <span class="half-row-col" style="text-align: right;">
           <button class="button button-outline" style="width: 10vh; height: 10vh; vertical-align: middle; margin-right: 10vw;" type="button" phx-click="dec-left">-</button>
           <button class="button button-outline" style="width: 18vh; height: 18vh; vertical-align: middle;" type="button" phx-click="inc-left">+</button>
@@ -40,7 +40,7 @@ body {
       </div>
     <% end %>
 
-    <div id="sets-container" <%= if game_over?(@state) do %>class="game-over"<% end %>>
+    <div class="sets-container <%= if game_over?(@state) do %>game-over<% end %>">
       <div class="set-end-confirmation">
         <%= if set_over?(@state) do %>
           End current set?

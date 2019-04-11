@@ -7,10 +7,10 @@ body {
 
 <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/scoreboard.css") %>">
 
-<div id="wrapper">
-  <div id="main-title" class="title">Cup Final 2019</div>
+<div class="container">
+  <div class="main-title title">Cup Final 2019</div>
 
-  <div id="scoreboard" class="border">
+  <div class="scoreboard border">
     <img
       style="height: 60vmin; position: absolute; bottom: 1vh; left: 1vw;"
       src="<%= Routes.static_path(@conn, "/images/player.png") %>"/>
@@ -19,7 +19,7 @@ body {
       style="height: 30vmin; position: absolute; bottom: 8vh; right: 6vw;"
       src="<%= Routes.static_path(@conn, "/images/logo.png") %>"/>
 
-    <div id="team-names" class="row">
+    <div class="team-names row">
       <span class="half-row-col title"><%= team_name(@state, :left) %></span>
       <span class="svrf-logo">
         <img src="<%= Routes.static_path(@conn, "/images/svrf.png") %>"/>
@@ -27,13 +27,13 @@ body {
       <span class="half-row-col title"><%= team_name(@state, :right) %></span>
     </div>
 
-    <div id="current-set" class="row <%= if game_over?(@state) do %>game-over<% end %>">
+    <div class="current-set row <%= if game_over?(@state) do %>game-over<% end %>">
       <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :left) %></span>
       <span style="margin: 0 0.5ex;">-</span>
       <span class="half-row-col"><%= current_score(@state, :right) %></span>
     </div>
 
-    <div id="sets-container">
+    <div class="sets-container">
       <div class="summary title">
         <span class="border wrapper">
           <span class="set-count"><%= sets_count(@state, :left) %></span>

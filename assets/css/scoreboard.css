@@ -2,19 +2,19 @@ html {
   font-family: arial;
 }
 
-#wrapper {
+.container {
   height: 92vh;
   width: 92vw;
   margin: 4vh 4vw;
 }
 
-#main-title {
+.main-title {
   font-size: 6vh;
   flex: none;
   text-align: center;
 }
 
-#scoreboard {
+.scoreboard {
   height: 80vh;
   padding: 2vh;
   border-radius: 40px;
@@ -23,43 +23,43 @@ html {
   flex-direction: column;
 }
 
-#team-names {
+.team-names {
   font-weight: bold;
   font-size: 8vh;
 }
 
-#switch-button {
+.switch-button {
   height: 7.5vh;
   width: 21vh;
   margin-top: 2vh;
   font-size: 6vh;
 }
 
-#current-set {
+.current-set {
   font-size: 16vh;
   max-height: 350px;
   opacity: 1;
 }
 
-#current-set.game-over {
+.current-set.game-over {
   max-height: 0;
   opacity: 0;
   margin-bottom: 4vh;
   transition: opacity 1s linear, max-height 1.5s ease-in-out, margin-bottom 0.8s 0.6s linear;
 }
 
-#current-set .score {
+.current-set .score {
   display: inline-block;
   flex: 0 0 auto;
   width: 1.2em;
 }
 
-#sets-container .summary {
+.sets-container .summary {
   margin: 10px;
   font-size: 6vh;
 }
 
-#sets-container .wrapper {
+.sets-container .wrapper {
   padding: 15px;
   margin: 25px;
   border-radius: 20px;
