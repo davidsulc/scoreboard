@@ -48,6 +48,12 @@ defmodule ScoreboardWeb.GameSetupController do
     |> to_game_state(Map.put(state, :invert_display, invert == "true"))
   end
 
+  defp to_game_state(%{"switch_on_scoreboard" => switch} = params, state) do
+    params
+    |> Map.delete("switch_on_scoreboard")
+    |> to_game_state(Map.put(state, :switch_on_scoreboard, switch == "true"))
+  end
+
   defp to_game_state(%{"team_a" => name} = params, state) do
     params
     |> Map.delete("team_a")

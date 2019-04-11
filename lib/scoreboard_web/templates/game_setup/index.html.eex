@@ -23,6 +23,10 @@
   <label for="game_invert_display" style="display: inline;">Invert scoreboard display</label>
   <br/>
 
+  <%= checkbox f, :switch_on_scoreboard, value: @state.switch_on_scoreboard %>
+  <label for="game_switch_on_scoreboard" style="display: inline;">Reflect team switches on scoreboard</label>
+  <br/>
+
   <div style="margin-top: 3ex;">
     <%= for set <- 0..4 do %>
       <label>Set <%= set + 1 %>: </label>

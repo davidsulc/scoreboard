@@ -2,6 +2,7 @@ defmodule Scoreboard.GameState.State do
   defstruct scorekeeper_display_order: {:team_a, :team_b},
             scoreboard_display_order: {:team_a, :team_b},
             invert_display: true,
+            switch_on_scoreboard: true,
             can_be_switched: true,
             invalid_score: false,
             game_over: false,
@@ -27,17 +28,24 @@ defmodule Scoreboard.GameState.State do
     end
   end
 
-  def switch_sides(%__MODULE__{} = state) do
-    %{
-      scorekeeper_display_order: {old_sk_left, old_sk_right},
-      scoreboard_display_order: {old_sb_left, old_sb_right}
-    } = state
+  def switch_sides(%__MODULE__{switch_on_scoreboard: switcheable} = state) do
+    state = switch_scorekeeper_sides(state)
 
-    %{
+    if switcheable do
+      switch_scoreboard_sides(state)
+    else
       state
-      | scorekeeper_display_order: {old_sk_right, old_sk_left},
-        scoreboard_display_order: {old_sb_right, old_sb_left}
-    }
+    end
+  end
+
+  def switch_scorekeeper_sides(%__MODULE__{} = state) do
+    %{scorekeeper_display_order: {old_sk_left, old_sk_right}} = state
+    %{state | scorekeeper_display_order: {old_sk_right, old_sk_left}}
+  end
+
+  def switch_scoreboard_sides(%__MODULE__{} = state) do
+    %{scoreboard_display_order: {old_sb_left, old_sb_right}} = state
+    %{state | scoreboard_display_order: {old_sb_right, old_sb_left}}
   end
 
   def merge(%__MODULE__{} = state, %{} = state_update) do
