@@ -7,46 +7,92 @@ body {
 
 <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/scoreboard.css") %>">
 
-<div class="container">
-  <div class="main-title title">Cup Final 2019</div>
+<div class="container <%= if order_flipped(@state) do %>flipped<% end %>">
+  <div class="front">
+    <div class="main-title title">Cup Final 2019</div>
 
-  <div class="scoreboard border">
-    <img
-      style="height: 60vmin; position: absolute; bottom: 1vh; left: 1vw;"
-      src="<%= Routes.static_path(@conn, "/images/player.png") %>"/>
+    <div class="scoreboard border">
+      <img
+        style="height: 60vmin; position: absolute; bottom: 1vh; left: 1vw;"
+        src="<%= Routes.static_path(@conn, "/images/player.png") %>"/>
 
-    <img
-      style="height: 30vmin; position: absolute; bottom: 8vh; right: 6vw;"
-      src="<%= Routes.static_path(@conn, "/images/logo.png") %>"/>
+      <img
+        style="height: 30vmin; position: absolute; bottom: 4vh; right: 3vw;"
+        src="<%= Routes.static_path(@conn, "/images/logo.png") %>"/>
 
-    <div class="team-names row">
-      <span class="half-row-col title"><%= team_name(@state, :left) %></span>
-      <span class="svrf-logo">
-        <img src="<%= Routes.static_path(@conn, "/images/svrf.png") %>"/>
-      </span>
-      <span class="half-row-col title"><%= team_name(@state, :right) %></span>
-    </div>
-
-    <div class="current-set row <%= if game_over?(@state) do %>game-over<% end %>">
-      <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :left) %></span>
-      <span style="margin: 0 0.5ex;">-</span>
-      <span class="half-row-col"><%= current_score(@state, :right) %></span>
-    </div>
-
-    <div class="sets-container">
-      <div class="summary title">
-        <span class="border wrapper">
-          <span class="set-count"><%= sets_count(@state, :left) %></span>
-          Sets
-          <span class="set-count"><%= sets_count(@state, :right) %></span>
+      <div class="team-names row">
+        <span class="half-row-col title"><%= team_name(@state, :team_a) %></span>
+        <span class="svrf-logo">
+          <img src="<%= Routes.static_path(@conn, "/images/svrf.png") %>"/>
         </span>
+        <span class="half-row-col title"><%= team_name(@state, :team_b) %></span>
       </div>
 
-      <table class="fixed">
-        <%= for {left_won, right_won} <- pretty_sets(@state) do %>
-          <tr><td><%= left_won %></td><td><%= right_won %></td></tr>
-        <% end %>
-      </table>
+      <div class="current-set row <%= if game_over?(@state) do %>game-over<% end %>">
+        <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :team_a) %></span>
+        <span style="margin: 0 0.5ex;">-</span>
+        <span class="half-row-col"><%= current_score(@state, :team_b) %></span>
+      </div>
+
+      <div class="sets-container">
+        <div class="summary title">
+          <span class="border wrapper">
+            <span class="set-count"><%= sets_count(@state, :team_a) %></span>
+            Sets
+            <span class="set-count"><%= sets_count(@state, :team_b) %></span>
+          </span>
+        </div>
+
+        <table class="fixed">
+          <%= for {left_won, right_won} <- pretty_sets(@state) do %>
+            <tr><td><%= left_won %></td><td><%= right_won %></td></tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <div class="main-title title">Cup Final 2019</div>
+
+    <div class="scoreboard border">
+      <img
+        style="height: 60vmin; position: absolute; bottom: 1vh; left: 1vw;"
+        src="<%= Routes.static_path(@conn, "/images/player.png") %>"/>
+
+      <img
+        style="height: 30vmin; position: absolute; bottom: 4vh; right: 3vw;"
+        src="<%= Routes.static_path(@conn, "/images/logo.png") %>"/>
+
+      <div class="team-names row">
+        <span class="half-row-col title"><%= team_name(@state, :team_b) %></span>
+        <span class="svrf-logo">
+          <img src="<%= Routes.static_path(@conn, "/images/svrf.png") %>"/>
+        </span>
+        <span class="half-row-col title"><%= team_name(@state, :team_a) %></span>
+      </div>
+
+      <div class="current-set row <%= if game_over?(@state) do %>game-over<% end %>">
+        <span class="half-row-col" style="text-align: right;"><%= current_score(@state, :team_b) %></span>
+        <span style="margin: 0 0.5ex;">-</span>
+        <span class="half-row-col"><%= current_score(@state, :team_a) %></span>
+      </div>
+
+      <div class="sets-container">
+        <div class="summary title">
+          <span class="border wrapper">
+            <span class="set-count"><%= sets_count(@state, :team_b) %></span>
+            Sets
+            <span class="set-count"><%= sets_count(@state, :team_a) %></span>
+          </span>
+        </div>
+
+        <table class="fixed">
+          <%= for {left_won, right_won} <- pretty_sets(@state) do %>
+            <tr><td><%= left_won %></td><td><%= right_won %></td></tr>
+          <% end %>
+        </table>
+      </div>
     </div>
   </div>
 </div>

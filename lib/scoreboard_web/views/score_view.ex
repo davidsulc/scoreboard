@@ -8,21 +8,15 @@ defmodule ScoreboardWeb.ScoreView do
   defdelegate set_over?(state), to: State
   defdelegate game_over?(state), to: State
 
-  defp get_team(state, side) when side in [:left, :right] do
-    {left, right} = State.scoreboard_display_order(state)
-
-    case side do
-      :left -> left
-      :right -> right
-    end
+  def order_flipped(state) do
+    State.scoreboard_display_order(state) == {:team_b, :team_a}
   end
 
-  def team_name(state, side) when side in [:left, :right] do
-    State.team_name(state, get_team(state, side))
+  def team_name(state, team) when team in [:team_a, :team_b] do
+    State.team_name(state, team)
   end
 
-  def current_score(state, side) when side in [:left, :right] do
-    team = get_team(state, side)
+  def current_score(state, team) when team in [:team_a, :team_b] do
     {a, b} = State.current_set(state)
 
     case team do
@@ -31,10 +25,10 @@ defmodule ScoreboardWeb.ScoreView do
     end
   end
 
-  def sets_count(state, side) when side in [:left, :right] do
+  def sets_count(state, team) when team in [:team_a, :team_b] do
     {a, b} = State.sets_count(state)
 
-    case get_team(state, side) do
+    case team do
       :team_a -> a
       :team_b -> b
     end

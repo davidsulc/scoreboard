@@ -5,7 +5,29 @@ html {
 .container {
   height: 92vh;
   width: 92vw;
-  margin: 4vh 4vw;
+  margin: auto;
+  perspective: 900px;
+  transition: transform .8s;
+  transform-style: preserve-3d;
+}
+
+.container.flipped {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  transform: rotateY(0deg);
+}
+
+.back {
+  transform: rotateY(180deg);
 }
 
 .main-title {
