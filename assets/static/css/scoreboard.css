@@ -1,0 +1,179 @@
+html {
+  font-family: arial;
+}
+
+.container {
+  height: 92vh;
+  width: 92vw;
+  margin: auto;
+  perspective: 900px;
+  transition: transform .8s;
+  transform-style: preserve-3d;
+}
+
+.container.flipped {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  transform: rotateY(0deg);
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.main-title {
+  font-size: 6vh;
+  flex: none;
+  text-align: center;
+}
+
+.scoreboard {
+  height: 80vh;
+  padding: 2vh;
+  border-radius: 40px;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+}
+
+.team-names {
+  font-weight: bold;
+  font-size: 8vh;
+}
+
+.switch-button {
+  height: 7.5vh;
+  width: 21vh;
+  margin-top: 2vh;
+  font-size: 6vh;
+}
+
+.current-set {
+  font-size: 16vh;
+  max-height: 350px;
+  opacity: 1;
+}
+
+.current-set.game-over {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 4vh;
+  transition: opacity 1s linear, max-height 1.5s ease-in-out, margin-bottom 0.8s 0.6s linear;
+}
+
+.current-set .score {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.2em;
+}
+
+.sets-container .summary {
+  margin: 10px;
+  font-size: 6vh;
+}
+
+.sets-container .wrapper {
+  padding: 15px;
+  margin: 25px;
+  border-radius: 20px;
+}
+
+.set-count {
+  margin: 3ex;
+  font-size: 80px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.row {
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.border {
+  border: 5px #62b33a solid;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.half-row-col {
+  flex: 1 1 1em;
+}
+
+.svrf-logo {
+  opacity: 0.4;
+}
+
+.svrf-logo {
+  max-height: 4vh;
+}
+
+.button {
+  border-color: #62b33a;
+  background-color: #62b33a;
+  color: black;
+}
+
+.button.button-outline {
+  border-color: #606c76;
+  background-color: transparent;
+
+  color: #606c76;
+  font-size: 10vh;
+}
+
+.button.button-outline:hover {
+  border-color: #62b33a;
+  background-color: #62b33a;
+  color: black;
+}
+
+.set-end-confirmation {
+  text-align: center;
+  border: none;
+  font-size: 6vh;
+  min-height: 10vh;
+}
+
+.set-end-confirmation .button {
+  height: 5vh;
+  font-size: 4vh;
+}
+
+table.fixed {
+  table-layout:fixed;
+  width: 100%;
+  font-size: 6vh;
+  border-spacing: 0;
+  padding: 0;
+  border-collapse: separate;
+}
+
+table.fixed td {
+  overflow:hidden;
+  width: 50%;
+  border: 0;
+  padding: 5px;
+}
+
+table.fixed td:nth-of-type(1) {
+  text-align: right;
+  padding-right: 2ex;
+}
+
+table.fixed td:nth-of-type(2) {
+  padding-left: 2ex;
+}
