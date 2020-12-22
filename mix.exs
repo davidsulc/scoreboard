@@ -39,7 +39,7 @@ defmodule Scoreboard.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"}
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", ref: "4c095b47ff2b1e13fc0c4c62b12a990944d4afb0"}
     ]
   end
 end
